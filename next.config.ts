@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+
+// @ts-ignore: next-pwa 타입 무시
 const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
@@ -7,7 +9,14 @@ const withPWA = require('next-pwa')({
 });
 
 const nextConfig: NextConfig = {
-  /* 여기에 기존 설정(이미지 도메인 등)이 있었다면 추가하세요 */
+  // 에러 메시지 팁대로 루트에 빈 turbopack 설정을 추가합니다.
+  // @ts-ignore: NextConfig 타입에 아직 반영되지 않았을 수 있으므로 무시 처리
+  turbopack: {},
+  
+  // Webpack 기반 플러그인(next-pwa) 사용을 명시
+  webpack: (config) => {
+    return config;
+  },
 };
 
 export default withPWA(nextConfig);
